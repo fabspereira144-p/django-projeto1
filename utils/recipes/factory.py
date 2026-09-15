@@ -1,13 +1,31 @@
-from random import randint
+from random import choice, randint
 
 from faker import Faker
+
+fake = Faker('pt_BR')
+
+
+FOOD_IMAGES = [
+    'https://images.unsplash.com/photo-1546069901-ba9599a7e63c',
+    'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38',
+    'https://images.unsplash.com/photo-1551183053-bf91a1d81141',
+    'https://images.unsplash.com/photo-1565958011703-44f9829ba187',
+    'https://images.unsplash.com/photo-1540189549336-e6e99c3679fe',
+    'https://images.unsplash.com/photo-1512621776951-a57141f2eefd',
+    'https://images.unsplash.com/photo-1563379926898-05f4575a45d8',
+    'https://images.unsplash.com/photo-1504674900247-0877df9cc836',
+]
 
 
 def rand_ratio():
     return randint(840, 900), randint(473, 573)
 
 
-fake = Faker('pt_BR')
+def get_random_food_image():
+    image = choice(FOOD_IMAGES)
+    width, height = rand_ratio()
+
+    return f'{image}?auto=format&fit=crop&w={width}&h={height}'
 
 
 def make_recipe():
@@ -29,7 +47,7 @@ def make_recipe():
             'name': fake.word()
         },
         'cover': {
-            'url': 'https://picsum.photos/%s/%s' % rand_ratio(),
+            'url': get_random_food_image(),
         }
     }
 
