@@ -5,17 +5,31 @@ from recipes.models import Category, Recipe, User
 
 class RecipeTestBase(TestCase):
     def setUp(self) -> None:
-        category = Category.objects.create(name='Category Test')
-        user = User.objects.create_user(
+        return super().setUp()
+
+    def make_category(self, name='Category Test'):
+        return Category.objects.create(name=name)
+
+    def make_author(
+            self, 
             first_name='user', 
             last_name='test', 
             username='user', 
-            password='123456',
-            email='username@email.com',
+            password='123456', 
+            email='username@email.com'
+            ):
+        return User.objects.create_user(
+            first_name=first_name, 
+            last_name=last_name, 
+            username=username, 
+            password=password,
+            email=email,
             )
-        recipe = Recipe.objects.create(  # noqa: F841
-            category=category,
-            author=user,
+
+    def make_recipe(
+            self,
+            category_data=None,
+            author_data=None,
             title='Recipe Title',
             description='Recipe Description',
             slug='recipe-slug',
@@ -28,6 +42,29 @@ class RecipeTestBase(TestCase):
             created_at='2023-01-01 00:00:00',
             updated_at='2023-01-01 00:00:00',
             is_published=True,
-            cover='recipes/covers/2023/01/01/test.jpg'
+            cover='recipes/covers/2023/01/01/test.jpg'):
+
+        if category_data is None:
+            category_data = {}
+
+        if author_data is None:
+            author_data = {}
+
+        return Recipe.objects.create(
+            category=self.make_category(**category_data),
+            author=self.make_author(**author_data),
+            title=title,
+            description=description,
+            slug=slug,
+            preparation_time=preparation_time,
+            preparation_time_unit=preparation_time_unit,
+            servings=servings,
+            servings_unit=servings_unit,
+            preparation_steps=preparation_steps,
+            preparation_steps_is_html=preparation_steps_is_html,
+            created_at=created_at,
+            updated_at=updated_at,
+            is_published=is_published,
+            cover=cover
         )
-        return super().setUp()
+    
