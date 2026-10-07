@@ -46,6 +46,15 @@ class RecipeViewsTests(RecipeTestBase):
         self.assertIn('user', content)
         self.assertEqual(len(response_context_recipes), 1)
 
+    def test_recipe_home_template_dont_load_recipes_not_published(self):
+        #Checa se a view da home não carrega receitas que não estão publicadas
+        self.make_recipe(is_published=False)
+
+        response = self.client.get(reverse('recipes-home'))
+        content = response.content.decode('utf-8')
+
+        self.assertIn('No recipes found', content)
+
     def test_recipe_category_view_function_is_correct(self):
         #Checa se a função de view correta é chamada para a URL da categoria
         view = resolve(reverse('category', kwargs={'category_id': 1000}))
