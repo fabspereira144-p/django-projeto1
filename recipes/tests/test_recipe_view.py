@@ -100,3 +100,11 @@ class RecipeViewsTests(RecipeTestBase):
         content = response.content.decode('utf-8')
 
         self.assertIn(title, content)
+
+    def test_recipe_detail_template_dont_load_recipes_not_published(self):
+        #Checa se a view da receita não carrega receitas que não estão publicadas
+        recipe = self.make_recipe(is_published=False)
+
+        response = self.client.get(reverse('recipes-recipe', kwargs={'id': recipe.id}))
+
+        self.assertEqual(response.status_code, 200)
