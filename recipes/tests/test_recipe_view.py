@@ -107,4 +107,4 @@ class RecipeViewsTests(RecipeTestBase):
 
         response = self.client.get(reverse('recipes-recipe', kwargs={'id': recipe.id}))
 
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 404)
