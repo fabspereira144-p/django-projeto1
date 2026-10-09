@@ -16,7 +16,7 @@ class RecipeModelTest(RecipeTestBase):
             ('servings_unit', 65)
         ])
     def test_recipe_fields_max_length(self, field, max_length):
-
+        #Isso é um teste que verifica se os campos do modelo Recipe respeitam o limite máximo de caracteres definido no models.py.
         setattr(self.recipe, field, 'A' * (max_length + 1))
         with self.assertRaises(ValidationError):
             self.recipe.full_clean()
