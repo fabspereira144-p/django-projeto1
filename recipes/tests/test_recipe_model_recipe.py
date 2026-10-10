@@ -24,6 +24,6 @@ class RecipeModelTest(RecipeTestBase):
     def test_recipe_string_representation(self):
         #Isso é um teste que verifica se a representação em string do modelo Recipe é igual ao título da receita.
         self.recipe.title = 'Test Recipe Title'
-        self.recipe.full_clean()  # Valida o modelo antes de salvar
+        self.recipe.full_clean()
         self.recipe.save()
         self.assertEqual(str(self.recipe), 'Test Recipe Title')
