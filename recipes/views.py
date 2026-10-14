@@ -33,3 +33,6 @@ def recipes(request, id):
         'is_detail_page': True,
     })
 
+def search(request):
+    ...
+
