@@ -35,10 +35,13 @@ def recipes(request, id):
     })
 
 def search(request):
-    term = request.GET.get('q')
+    search_term = request.GET.get('q', '').strip() # Isso é o que o usuário digitou na barra de pesquisa
 
-    if not term:
+    if not search_term:
         raise Http404()
 
-    return render(request, "recipes/pages/search.html")
+    return render(request, "recipes/pages/search.html", context={
+        'page_title': f'Pesquisa por "{search_term}" | ',
+        'search_term': search_term,
+    })
 
