@@ -53,7 +53,7 @@ class RecipeViewsTests(RecipeTestBase):
         response = self.client.get(reverse('recipes-home'))
         content = response.content.decode('utf-8')
 
-        self.assertIn('No recipes found', content)
+        self.assertIn('Receitas não encontradas', content)
 
     def test_recipe_category_view_function_is_correct(self):
         #Checa se a função de view correta é chamada para a URL da categoria
