@@ -54,3 +54,30 @@ class RecipeHomeViewTests(RecipeTestBase):
         content = response.content.decode('utf-8')
 
         self.assertIn('Receitas não encontradas', content)
+    
+    def test_recipe_home_paginates_recipes_correctly(self):
+        for i in range(10):
+            self.make_recipe(
+                title=f'Reciple Title{i}',
+                slug=f'recipe-slug-{i}',
+                category_data={
+                    'name': f'Category{i}'
+                },
+                author_data={
+                    'username': f'user{i}',
+                    'email': f'user{i}@email.com'
+                },
+            )
+
+        response = self.client.get(reverse('recipes-home'))
+        recipes = response.context['recipes']
+
+        self.assertEqual(len(recipes), 9)
+
+        # Segunda página
+        response = self.client.get(
+            reverse('recipes-home') + '?page=2'
+        )
+        recipes = response.context['recipes']
+
+        self.assertEqual(len(recipes), 1)
