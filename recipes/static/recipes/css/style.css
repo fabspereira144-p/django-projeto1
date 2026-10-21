@@ -296,6 +296,12 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--color-dark-text);
 }
 
+.messages-container {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: calc(var(--spacing-gutter-medium) / 2);
+}
+
 .message-error {
   border: 1px solid var(--color-error-dark);
   background: var(--color-error-light);
@@ -365,4 +371,10 @@ h1, h2, h3, h4, h5, h6 {
 
 .m-y {
     margin: var(--spacing-gutter-medium) 0;
+}
+
+@media (max-width: 600px) {
+  .main-content-list {
+    grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
+  }
 }
